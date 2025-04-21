@@ -44,18 +44,19 @@ function Signup() {
     let activateTimer;
 
     if (phoneNumber != null) {
-      activateTimer = setTimeout(() => {
+      activateTimer = setTimeout(async () => {
         if (phoneNumber.length == 0) {
           setPhoneStatus("zero");
           setPhoneAcknow("Enter Phone Number");
         } else if (phoneNumber.length >= 10 && phoneNumber.length <= 13) {
-          let result = apiCall("existPhoneNumber", phoneNumber);
-
+          let result = await apiCall("existPhoneNumber", phoneNumber);
+          console.log("check this");
+          console.log(result);
           if (result == "notExist") {
-            setPhoneStatus(true);
+            setPhoneStatus(false);
             setPhoneAcknow("Validated");
           } else {
-            setPhoneStatus(false);
+            setPhoneStatus(true);
             setPhoneAcknow("Phone Number Aready Exist");
           }
         } else {
@@ -74,18 +75,18 @@ function Signup() {
     let activateTimer;
 
     if (accountId != null) {
-      activateTimer = setTimeout(() => {
+      activateTimer = setTimeout(async () => {
         if (accountId.length == 0) {
           setAccountIdStatus("zero");
           setAccountIdAcknow("Enter Account Id");
         } else if (accountId.length == 40) {
-          let result = apiCall("existAccountId", accountId);
+          let result = await apiCall("existAccountId", accountId);
 
           if (result == "notExist") {
-            setAccountIdStatus(true);
+            setAccountIdStatus(false);
             setAccountIdAcknow("Validated");
           } else {
-            setAccountIdStatus(false);
+            setAccountIdStatus(true);
             setAccountIdAcknow("Account Id Already Exist");
           }
         } else {
@@ -104,19 +105,19 @@ function Signup() {
     let activateTimer;
 
     if (gmailId != null) {
-      activateTimer = setTimeout(() => {
+      activateTimer = setTimeout(async () => {
         const gmailRegex = /^[a-zA-Z0-9._%+-]+@(gmail|googlemail)\.com$/;
         if (gmailId.length == 0) {
           setGmailIdStatus("zero");
           setGmailIdAcknow("Enter Gmail Id");
         } else {
           if (gmailRegex.test(gmailId)) {
-            let result = apiCall("existGmailId", gmailId);
+            let result = await apiCall("existGmailId", gmailId);
             if (result == "notExist") {
-              setGmailIdStatus(true);
+              setGmailIdStatus(false);
               setGmailIdAcknow("Validated");
             } else {
-              setGmailIdStatus(false);
+              setGmailIdStatus(true);
               setGmailIdAcknow("Gmail Id Already Exist");
             }
           } else {
@@ -192,8 +193,25 @@ function Signup() {
         operation: "SignupValidation",
       }),
     });
-    //let standardResponse = await serverResposnse.json();
-    //setPhoneStatus(standardResponse.status);
+    let standardResponse = await serverResposnse.json();
+    return standardResponse.status;
+  };
+
+  const createAccount = async () => {
+    let serverResposnse = await fetch("http://localhost:3000/api/server", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        operation: "createAccount",
+        userName,
+        phoneNumber,
+        accountId,
+        gmailId,
+        password1,
+      }),
+    });
+    let standardResponse = serverResposnse.json();
+    let result = standardResponse.status;
   };
 
   return (
@@ -317,7 +335,10 @@ function Signup() {
             <h5 className="ml-[10px] mt-[3px]">{password2Acknow}</h5>
           </div>
 
-          <button className="bg-gradient-to-r from-blue-500 to-purple-500 h-[9%] w-[100%] rounded-[20px] text-white font-bold">
+          <button
+            className="bg-gradient-to-r from-blue-500 to-purple-500 h-[9%] w-[100%] rounded-[20px] text-white font-bold"
+            onClick={createAccount}
+          >
             Sign Up
           </button>
           <div className="">

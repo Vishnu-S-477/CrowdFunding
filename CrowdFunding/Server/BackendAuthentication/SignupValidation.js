@@ -4,7 +4,11 @@ mongoDbConnection();
 
 export const existPhoneNumber = async (phoneNumber) => {
   const schema = mongoose.Schema({
+    userName: String,
     phoneNumber: Number,
+    accountId: String,
+    gmailId: String,
+    password: String,
   });
   const phoneNumberModel =
     mongoose.models.User || mongoose.model("User", schema);

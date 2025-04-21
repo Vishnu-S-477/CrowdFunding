@@ -1,6 +1,8 @@
 import express from "express";
 import cors from "cors";
 import { SignupValidator } from "./BackendAuthentication/SignupValidator.js";
+import { generatePresignedUrl } from "./PreSignedUrl/uploadPresignedUrl.js";
+import { createAccount } from "./BackendAuthentication/Signup.js";
 
 const port = 3000;
 const app = express();
@@ -16,6 +18,25 @@ app.post("/api/server", (req, res) => {
       res.json({ status: result });
     };
     existCheck();
+  } else if (data.operation == "getUploadPresignedUrl") {
+    const activateProcess = async () => {
+      let result = await generatePresignedUrl(data.name, data.type);
+      console.log(result);
+      res.json({ url: result });
+    };
+    activateProcess();
+  } else if (data.operation == "createAccount") {
+    const createAccounts = async () => {
+      let result = await createAccount(
+        data.userName,
+        data.phoneNumber,
+        data.accountId,
+        data.gmailId,
+        data.password1
+      );
+      res.json({ status: result });
+    };
+    createAccounts();
   }
 });
 
