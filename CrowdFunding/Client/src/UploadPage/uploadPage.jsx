@@ -12,15 +12,18 @@ function UploadPage() {
   };
 
   const getPresignedUrl = async () => {
-    let serverResponse = await fetch("http://localhost:3000/api/server", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        operation: "getUploadPresignedUrl",
-        name: file.name,
-        type: file.type,
-      }),
-    });
+    let serverResponse = await fetch(
+      "http://localhost:3000/api/uploadPreSignedUrl",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          operation: "getUploadPresignedUrl",
+          name: file.name,
+          type: file.type,
+        }),
+      }
+    );
 
     let standardData = await serverResponse.json();
     let preSignedUrl = standardData.url;

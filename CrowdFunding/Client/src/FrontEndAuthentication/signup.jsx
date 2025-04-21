@@ -184,32 +184,38 @@ function Signup() {
   }, [password2]);
 
   const apiCall = async (type, input) => {
-    let serverResposnse = await fetch("http://localhost:3000/api/server", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        input: input,
-        type: type,
-        operation: "SignupValidation",
-      }),
-    });
+    let serverResposnse = await fetch(
+      "http://localhost:3000/api/signUpValidation",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          input: input,
+          type: type,
+          operation: "SignupValidation",
+        }),
+      }
+    );
     let standardResponse = await serverResposnse.json();
     return standardResponse.status;
   };
 
   const createAccount = async () => {
-    let serverResposnse = await fetch("http://localhost:3000/api/server", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        operation: "createAccount",
-        userName,
-        phoneNumber,
-        accountId,
-        gmailId,
-        password1,
-      }),
-    });
+    let serverResposnse = await fetch(
+      "http://localhost:3000/api/createAccount",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          operation: "createAccount",
+          userName,
+          phoneNumber,
+          accountId,
+          gmailId,
+          password1,
+        }),
+      }
+    );
     let standardResponse = serverResposnse.json();
     let result = standardResponse.status;
   };
