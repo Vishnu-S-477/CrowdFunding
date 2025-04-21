@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import bcrypt from "bcrypt";
 
 export const createAccount = async (
   userName,
@@ -7,6 +8,11 @@ export const createAccount = async (
   gmailId,
   password
 ) => {
+  let encryptedPassword;
+
+  encryptedPassword = await bcrypt.hash(password, 10);
+  console.log(encryptedPassword);
+
   const schema = mongoose.Schema({
     userName: String,
     phoneNumber: Number,
@@ -20,7 +26,7 @@ export const createAccount = async (
     phoneNumber,
     accountId,
     gmailId,
-    password,
+    password: encryptedPassword,
   });
   try {
     await newUser.save();

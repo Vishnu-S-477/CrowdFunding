@@ -3,11 +3,30 @@ import cors from "cors";
 import { SignupValidator } from "./BackendAuthentication/SignupValidator.js";
 import { generatePresignedUrl } from "./PreSignedUrl/uploadPresignedUrl.js";
 import { createAccount } from "./BackendAuthentication/Signup.js";
+import session from "express-session";
 
 const port = 3000;
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    orogin: "http://localhost:3000",
+    credentials: true,
+  })
+);
+
+app.use(
+  session({
+    secret: "sneha@vishnu",
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      httpOnly: true,
+      maxAge: 1000 * 60 * 60,
+      secure: false,
+    },
+  })
+);
 
 app.use(express.json());
 
@@ -33,6 +52,11 @@ app.post("/api/signUpValidation", (req, res) => {
 
 app.post("/api/createAccount", (req, res) => {
   let data = req.body;
+  req.session.phoneNumber = data.phoneNumber;
+  req.session.IsLogin = true;
+  req.session.accountId = data.accountId;
+  req.session.gmailId = data.gmailId;
+  console.log(req.session.gmailId);
   const createAccounts = async () => {
     let result = await createAccount(
       data.userName,
