@@ -3,6 +3,8 @@ import cors from "cors";
 import { SignupValidator } from "./BackendAuthentication/SignupValidator.js";
 import { generatePresignedUrl } from "./PreSignedUrl/uploadPresignedUrl.js";
 import { createAccount } from "./BackendAuthentication/Signup.js";
+import { LoginValidator } from "./BackendAuthentication/LoginValidator.js";
+import { Login } from "./BackendAuthentication/Login.js";
 import session from "express-session";
 
 const port = 3000;
@@ -68,6 +70,26 @@ app.post("/api/createAccount", (req, res) => {
     res.json({ status: result });
   };
   createAccounts();
+});
+
+app.post("/api/loginValidation", (req, res) => {
+  let data = req.body;
+  const existCheck = async () => {
+    const status = await LoginValidator(data.type, data.identifier);
+    res.json({ status });
+  };
+  existCheck();
+});
+
+app.post("/api/login", (req, res) => {
+  let data = req.body;
+  const loginVerify = async () => {
+    const result = await Login(data.type, data.identifier, data.password);
+    console.log("Below is Check");
+    console.log(result);
+    res.json({ status: result });
+  };
+  loginVerify();
 });
 
 app.listen(port, () => {
