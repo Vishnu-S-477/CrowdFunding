@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
   const [identifierStatus, setIdentifierStatus] = useState(null);
   const [passwordStatus, setPasswordStatus] = useState(null);
   const [identifierAcknow, setIdentifierAcknow] = useState(null);
   const [passwordAcknow, setPasswordAcknow] = useState(null);
+  const navigate = useNavigate();
 
   const [identifier, setIdentifier] = useState(null);
 
@@ -100,6 +102,18 @@ function Login() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ type, identifier, password }),
     });
+    let standardResponse = await serverResposnse.json();
+    let result = standardResponse.status;
+    console.log(result);
+    if (result == true) {
+      navigate("/main");
+    } else {
+      alert("Incorrect password");
+    }
+  };
+
+  const goToSignUp = () => {
+    navigate("/signup");
   };
   return (
     <div className="flex h-[100vh] w-[100vw] items-center justify-center">
@@ -158,7 +172,10 @@ function Login() {
           </button>
           <div className="">
             New User
-            <span className="font-bold text-purple-800 ml-[5px] cursor-pointer">
+            <span
+              className="font-bold text-purple-800 ml-[5px] cursor-pointer"
+              onClick={goToSignUp}
+            >
               Signup here
             </span>
           </div>

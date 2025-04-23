@@ -5,6 +5,7 @@ function UploadPage() {
   const descriptionRef = useRef();
   const amountRef = useRef();
   const categoryRef = useRef();
+  const randomNumber = Math.floor(Math.random() * 90000) + 10000;
   let file = null;
 
   const storeFile = (e) => {
@@ -19,7 +20,7 @@ function UploadPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           operation: "getUploadPresignedUrl",
-          name: file.name,
+          name: randomNumber + file.name,
           type: file.type,
         }),
       }
@@ -39,8 +40,35 @@ function UploadPage() {
       body: file,
     });
     if (uploadRes.ok) {
-      // just send one more request to mongoB
     }
+  };
+
+  const createCampaignApiCall = () => {
+    const campaignProfileName = randomNumber + file.name;
+    const campaignCategory = categoryRef.current.value;
+    const campaignTitle = campaignNameRef.current.value;
+    const campaignDescription = descriptionRef.current.value;
+    const campaignTotalAmount = amountRef.current.value;
+    const createCampaign = async () => {
+      const serverResponse = await fetch(
+        "http://localhost:3000/api/createCampaign",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(
+            campaignProfileName,
+            campaignCategory,
+            campaignTitle,
+            campaignDescription,
+            campaignTotalAmount
+          ),
+        }
+      );
+      const standardResponse = await serverResponse.json();
+      const result = standardResponse.status;
+    };
   };
 
   return (
@@ -70,7 +98,7 @@ function UploadPage() {
           ref={amountRef}
         ></input>
 
-        <div className="flex flex-col border-[2px] border-grey-700 rounded-[5px] w-full p-[2px]">
+        <div className="flex flex-col justify-between border-[2px] border-grey-700 rounded-[5px] h-[90px] w-full p-[2px]">
           <h2 className="text-normal ml-[5px] mb-[5px] ">
             Upload Campaign Photo
           </h2>

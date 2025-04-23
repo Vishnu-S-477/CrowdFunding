@@ -1,6 +1,8 @@
 import { use, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Signup() {
+  const navigate = useNavigate();
   const [nameStatus, setNameStatus] = useState(null);
   const [phoneStatus, setPhoneStatus] = useState(null);
   const [accountIdStatus, setAccountIdStatus] = useState(null);
@@ -216,8 +218,18 @@ function Signup() {
         }),
       }
     );
-    let standardResponse = serverResposnse.json();
+    let standardResponse = await serverResposnse.json();
+
     let result = standardResponse.status;
+    if (result == "success_account_creation") {
+      navigate("/main");
+    } else {
+      alert("invalid Input");
+    }
+  };
+
+  const goToLogin = () => {
+    navigate("/");
   };
 
   return (
@@ -349,7 +361,10 @@ function Signup() {
           </button>
           <div className="">
             Already have an account?
-            <span className="font-bold text-purple-800 ml-[5px] cursor-pointer">
+            <span
+              className="font-bold text-purple-800 ml-[5px] cursor-pointer"
+              onClick={goToLogin}
+            >
               Login here
             </span>
           </div>

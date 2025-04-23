@@ -92,6 +92,10 @@ app.post("/api/login", (req, res) => {
   loginVerify();
 });
 
+app.post("/api/createCampaign", (req, res) => {
+  let data = req.body;
+});
+
 app.listen(port, () => {
   console.log("server Started");
 });
