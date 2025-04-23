@@ -6,6 +6,7 @@ import { createAccount } from "./BackendAuthentication/Signup.js";
 import { LoginValidator } from "./BackendAuthentication/LoginValidator.js";
 import { Login } from "./BackendAuthentication/Login.js";
 import { CreateCampaign } from "./createCampaign/createCampaign.js";
+import { getObjectTemplate } from "./getTemplateJSON/getTemplateJSON.js";
 import session from "express-session";
 
 const port = 3000;
@@ -108,6 +109,14 @@ app.post("/api/createCampaign", (req, res) => {
   activateProcess();
 });
 
+app.post("/api/getMainJson", (req, res) => {
+  const startProcess = async () => {
+    let result = await getObjectTemplate();
+    console.log(result);
+    res.json({ result });
+  };
+  startProcess();
+});
 app.listen(port, () => {
   console.log("server Started");
 });

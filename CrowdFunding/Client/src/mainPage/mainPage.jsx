@@ -4,6 +4,25 @@ function MainPage() {
   const goToUploadPage = () => {
     navigate("/upload");
   };
+  const getData = () => {
+    getJsonData();
+  };
+  const getJsonData = () => {
+    const getResult = async () => {
+      let serverResponse = await fetch(
+        "http://localhost:3000/api/getMainJson",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ operation: "getJSONData" }),
+        }
+      );
+      let standardData = await serverResponse.json();
+      console.log(standardData);
+    };
+    getResult();
+  };
+
   return (
     <div className="h-[auto] w-[100vw]">
       <div className="flex  h-[50px] w-[100vw] border-[1px] border-grey-300 shadow-md rounded-[5px]">
@@ -25,6 +44,7 @@ function MainPage() {
           <img
             src="https://imgs.search.brave.com/MZ_Ut0GeOk3FyhdbaO0oxhXaS3wH5uJb47uFSMrIjO8/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMuaWNvbi1pY29u/cy5jb20vMjU5Ni9Q/TkcvOTYvaGFtYnVy/Z2VyX2J1dHRvbl9t/ZW51X2ljb25fMTU1/Mjk2LnBuZw"
             style={{ height: "25px" }}
+            onClick={getData}
           />
         </div>
       </div>
@@ -35,7 +55,7 @@ function MainPage() {
               <h4 className="text-white text-[14px] font-bold">Education</h4>
             </div>
             <img
-              src="https://imgs.search.brave.com/ZbzFyoIkQO5r8HfUMPwTDFLtJvaaBghuxFBvhxXhnP8/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL00v/TVY1QlpEQXhPV1Ew/Tm1NdE5USXpOUzAw/WVRka0xXSTRNekF0/WkRNM1pEZG1ZVE5s/TWpabVhrRXlYa0Zx/Y0djQC5qcGc"
+              src="https://imgs.search.brave.com/DXyrqk1lnVF4ArRrR0YcbCogVVe2eDKW_EVwONzR7B4/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly93d3cu/aXN0b2NrcGhvdG8u/Y29tL3Jlc291cmNl/cy9pbWFnZXMvRnJl/ZVBob3Rvcy9GcmVl/LVBob3RvLTc0MHg0/OTItMTc0NDkxNTMz/My5qcGc"
               className="h-[100%] w-[100%] object-cover rounded-tl-[10px] rounded-tr-[10px]"
             />
           </div>
