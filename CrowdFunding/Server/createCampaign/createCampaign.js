@@ -1,18 +1,18 @@
 import mongoose from "mongoose";
 
-const mongoURI =
-  "mongodb+srv://2022peccb287:2KwK45WkXGjPYCgi@cluster.w6owg.mongodb.net/?retryWrites=true&w=majority&appName=cluster";
+// const mongoURI =
+//   "mongodb+srv://2022peccb287:2KwK45WkXGjPYCgi@cluster.w6owg.mongodb.net/?retryWrites=true&w=majority&appName=cluster";
 
-const mongoDbConnection = async () => {
-  try {
-    await mongoose.connect(mongoURI);
-    console.log("MongoDB Connection Established Successfully");
-  } catch (e) {
-    console.log("Error In Access MongoDB Connection Establishment");
-  }
-};
+// const mongoDbConnection = async () => {
+//   try {
+//     await mongoose.connect(mongoURI);
+//     console.log("MongoDB Connection Established Successfully");
+//   } catch (e) {
+//     console.log("Error In Access MongoDB Connection Establishment");
+//   }
+// };
 
-mongoDbConnection();
+// mongoDbConnection();
 
 const schema = mongoose.Schema({
   campaignProfileName: String,
@@ -25,7 +25,7 @@ const schema = mongoose.Schema({
 const campaignModel =
   mongoose.models.campaign || mongoose.model("campaign", schema);
 
-const CreateCampaign = async (
+export const CreateCampaign = async (
   campaignProfileName,
   campaignCategory,
   campaignTitle,
@@ -42,10 +42,10 @@ const CreateCampaign = async (
     });
 
     await newCampaign.save();
-    console.log("Successfully campaign Craeted");
+    return "campaignCreatedSuccessfully";
   } catch (e) {
-    console.log("error in campaign creation", e);
+    return "error in campaign Creation";
   }
 };
 
-CreateCampaign("sample1.jpg", "buisness", "tile1", "description", 50000);
+// CreateCampaign("sample1.jpg", "buisness", "tile1", "description", 50000);

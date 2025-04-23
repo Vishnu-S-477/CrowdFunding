@@ -1,4 +1,9 @@
+import { useNavigate } from "react-router-dom";
 function MainPage() {
+  const navigate = useNavigate();
+  const goToUploadPage = () => {
+    navigate("/upload");
+  };
   return (
     <div className="h-[auto] w-[100vw]">
       <div className="flex  h-[50px] w-[100vw] border-[1px] border-grey-300 shadow-md rounded-[5px]">
@@ -11,7 +16,10 @@ function MainPage() {
         </div>
         <div className="flex h-full w-[40%] border-1px border-red-600"></div>
         <div className="flex items-center justify-center h-full w-[30%] border-1px border-red-7 00">
-          <button className="h-[30px] w-[150px] text-white text-[15px] bg-blue-500 rounded-[15px] mr-[10px]">
+          <button
+            className="h-[30px] w-[150px] text-white text-[15px] bg-blue-500 rounded-[15px] mr-[10px]"
+            onClick={goToUploadPage}
+          >
             Create Campaign
           </button>
           <img

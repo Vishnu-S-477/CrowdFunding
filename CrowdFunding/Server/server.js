@@ -5,6 +5,7 @@ import { generatePresignedUrl } from "./PreSignedUrl/uploadPresignedUrl.js";
 import { createAccount } from "./BackendAuthentication/Signup.js";
 import { LoginValidator } from "./BackendAuthentication/LoginValidator.js";
 import { Login } from "./BackendAuthentication/Login.js";
+import { CreateCampaign } from "./createCampaign/createCampaign.js";
 import session from "express-session";
 
 const port = 3000;
@@ -94,6 +95,17 @@ app.post("/api/login", (req, res) => {
 
 app.post("/api/createCampaign", (req, res) => {
   let data = req.body;
+  const activateProcess = async () => {
+    let result = await CreateCampaign(
+      data.campaignProfileName,
+      data.campaignCategory,
+      data.campaignTitle,
+      data.campaignDescription,
+      data.campaignTotalAmount
+    );
+    res.json({ status: result });
+  };
+  activateProcess();
 });
 
 app.listen(port, () => {
