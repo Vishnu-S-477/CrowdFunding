@@ -59,23 +59,22 @@ function MainPage() {
               <div className="flex relative h-[50%] w-[100%]">
                 <div className="flex items-center justify-center absolute top-2 right-2 h-[25px] w-[auto] bg-blue-700 rounded-[13px] p-[8px]">
                   <h4 className="text-white text-[14px] font-bold">
-                    Education
+                    {temp.campaignCategory}
                   </h4>
                 </div>
                 <img
-                  src="https://imgs.search.brave.com/DXyrqk1lnVF4ArRrR0YcbCogVVe2eDKW_EVwONzR7B4/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly93d3cu/aXN0b2NrcGhvdG8u/Y29tL3Jlc291cmNl/cy9pbWFnZXMvRnJl/ZVBob3Rvcy9GcmVl/LVBob3RvLTc0MHg0/OTItMTc0NDkxNTMz/My5qcGc"
+                  src={temp.url}
                   className="h-[100%] w-[100%] object-cover rounded-tl-[10px] rounded-tr-[10px]"
                 />
               </div>
               <div className="flex flex-col justify-between h-[50%] w-full p-[15px] pb-[25px]">
-                <h1 className="text-[25px] font-bold">Title</h1>
+                <h1 className="text-[25px] font-bold">{temp.campaignTitle}</h1>
                 <p className="text-[13px] text-gray-700 truncate  ">
-                  This is Description this is Description overflow-hidden: Hides
-                  any content that overflows the container.
+                  {temp.campaignDescription}
                 </p>
                 <div className="flex align-center justify-between h-[30px] w-full">
                   <h1 className="text-[14px] text-black font-bold">
-                    $50000/$100000
+                    $50000/${temp.campaignTotalAmount}
                   </h1>
                   <h1 className="text-[14px] text-blue-700 font-bold  ">50%</h1>
                 </div>
