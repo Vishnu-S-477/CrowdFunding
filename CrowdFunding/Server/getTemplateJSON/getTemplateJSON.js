@@ -14,10 +14,9 @@ const campaignModel =
 
 export const getObjectTemplate = async () => {
   const campaigns = await campaignModel.find({}).lean();
-  let url = {};
   for (let i = 0; i < campaigns.length; i++) {
     const objectName = campaigns[i].campaignProfileName;
-    url = await getObjectUrl(objectName);
+    let url = await getObjectUrl(objectName);
     campaigns[i].url = url;
   }
 
