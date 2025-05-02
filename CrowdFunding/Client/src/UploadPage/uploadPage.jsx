@@ -33,6 +33,10 @@ function UploadPage() {
     createCampaign(preSignedUrl);
   };
 
+  const goToMain = () => {
+    navigate("/main");
+  };
+
   const createCampaign = async (preSignedUrl) => {
     const uploadRes = await fetch(preSignedUrl, {
       method: "PUT",
@@ -137,7 +141,13 @@ function UploadPage() {
           <option value="memorial">🕊️ Memorial & Funeral</option>
         </select>
 
-        <div className="flex justify-end w-full pr-[3px]">
+        <div className="flex justify-between w-full pr-[3px]">
+          <button
+            className="border-[1px] bg-blue-500 h-[45px] w-[150px] text-white rounded-[7px]"
+            onClick={goToMain}
+          >
+            Back
+          </button>
           <button
             className="border-[1px] bg-blue-500 h-[45px] w-[150px] text-white rounded-[7px]"
             onClick={getPresignedUrl}
