@@ -28,6 +28,21 @@ function MainPage() {
     getJsonData();
   }, []);
 
+  const goToDetailPage = (data) => {
+    console.log(data);
+    navigate(
+      `/detailPage?totalAmount=${encodeURIComponent(
+        data.totalAmount
+      )}&campaignUrl=${encodeURIComponent(
+        data.url
+      )}&category=${encodeURIComponent(
+        data.category
+      )}&title=${encodeURIComponent(
+        data.title
+      )}&description=${encodeURIComponent(data.description)}`
+    );
+  };
+
   return (
     <div className="h-[auto] w-[100vw]">
       <div className="flex  h-[50px] w-[100vw] border-[1px] border-grey-300 shadow-md rounded-[5px]">
@@ -55,7 +70,18 @@ function MainPage() {
       <div className="h-[auto] w-[full] grid grid-cols-4  gap-x-[30px] gap-y-[30px] px-[50px] py-[40px]">
         {jsonData.map((temp) => {
           return (
-            <div className="flex flex-col h-[330px] w-[300px] rounded-[10px] border-[2px] border-gray-200 shadow-md ">
+            <div
+              className="flex flex-col h-[330px] w-[300px] rounded-[10px] border-[2px] border-gray-200 shadow-md "
+              onClick={() => {
+                goToDetailPage({
+                  url: temp.url,
+                  category: temp.campaignCategory,
+                  title: temp.campaignTitle,
+                  totalAmount: temp.campaignTotalAmount,
+                  description: temp.campaignDescription,
+                });
+              }}
+            >
               <div className="flex relative h-[50%] w-[100%]">
                 <div className="flex items-center justify-center absolute top-2 right-2 h-[25px] w-[auto] bg-blue-700 rounded-[13px] p-[8px]">
                   <h4 className="text-white text-[14px] font-bold">
