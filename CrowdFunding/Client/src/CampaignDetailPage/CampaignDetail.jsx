@@ -13,7 +13,7 @@ function CampaignDetail() {
 
   return (
     <div className="flex justify-center items-center h-[100vh] w-[100vw] bg-gray-100 pt-[100px] relative">
-      {donateCard == false ? (
+      {donateCard == true ? (
         <div className="h-[100vh] w-[100vw] flex items-center justify-center fixed z-[5] bg-white bg-opacity-75 top-[20px]">
           <div className="h-[590px] w-[400px] border-2 border-red-800 rounded-[10px] flex flex-col justify-between items-center px-[15px] py-[20px] bg-blue-950 relative">
             <div
